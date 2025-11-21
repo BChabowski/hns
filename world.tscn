@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2uj63fa7hd1y"]
+
+[ext_resource type="Texture2D" uid="uid://5b7appys1nfl" path="res://textures/overworld/world-placeholder.png" id="1_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://c4r2q48nkxnuq" path="res://pc.tscn" id="2_fj7yv"]
+
+[node name="World" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(69, -1252)
+scale = Vector2(200, 117.933)
+texture = ExtResource("1_fj7yv")
+
+[node name="PC" parent="." instance=ExtResource("2_fj7yv")]
+position = Vector2(531, 290)
