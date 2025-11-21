@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://yf4sybyc3ynp"]
+
+[ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
+[ext_resource type="Texture2D" uid="uid://0mex8fqul7mn" path="res://textures/characters/enemy-character-placeholder.png" id="1_w5dmy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hlmrv"]
+radius = 16.0
+height = 106.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hlmrv"]
+radius = 257.562
+
+[node name="EnemyPlaceholder" type="Node2D"]
+
+[node name="EnemyPlaceholder" type="CharacterBody2D" parent="."]
+script = ExtResource("1_hlmrv")
+
+[node name="EnemyCollision" type="CollisionShape2D" parent="EnemyPlaceholder"]
+shape = SubResource("CapsuleShape2D_hlmrv")
+
+[node name="EnemySprite" type="Sprite2D" parent="EnemyPlaceholder"]
+texture = ExtResource("1_w5dmy")
+
+[node name="DetectRadius" type="Area2D" parent="EnemyPlaceholder"]
+
+[node name="DetectRadiusCollision" type="CollisionShape2D" parent="EnemyPlaceholder/DetectRadius"]
+shape = SubResource("CircleShape2D_hlmrv")
+
+[connection signal="body_entered" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_entered"]
+[connection signal="body_exited" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_exited"]

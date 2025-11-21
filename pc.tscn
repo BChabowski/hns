@@ -17,3 +17,5 @@ shape = SubResource("CapsuleShape2D_crfiw")
 
 [node name="PcSprite" type="Sprite2D" parent="PC"]
 texture = ExtResource("1_ukbfy")
+
+[node name="Camera2D" type="Camera2D" parent="PC"]
