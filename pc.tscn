@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4r2q48nkxnuq"]
+[gd_scene load_steps=5 format=3 uid="uid://c4r2q48nkxnuq"]
 
 [ext_resource type="Script" uid="uid://c51p4f64526qo" path="res://player_character.gd" id="1_crfiw"]
 [ext_resource type="Texture2D" uid="uid://c75whjp3lslgi" path="res://textures/characters/player-character.png" id="1_ukbfy"]
@@ -6,6 +6,9 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_crfiw"]
 radius = 17.0
 height = 106.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_crfiw"]
+radius = 86.1452
 
 [node name="PC" type="Node2D"]
 
@@ -19,3 +22,8 @@ shape = SubResource("CapsuleShape2D_crfiw")
 texture = ExtResource("1_ukbfy")
 
 [node name="Camera2D" type="Camera2D" parent="PC"]
+
+[node name="AttackRadius" type="Area2D" parent="PC"]
+
+[node name="AttackShape" type="CollisionShape2D" parent="PC/AttackRadius"]
+shape = SubResource("CircleShape2D_crfiw")

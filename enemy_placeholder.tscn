@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://yf4sybyc3ynp"]
+[gd_scene load_steps=6 format=3 uid="uid://yf4sybyc3ynp"]
 
 [ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
 [ext_resource type="Texture2D" uid="uid://0mex8fqul7mn" path="res://textures/characters/enemy-character-placeholder.png" id="1_w5dmy"]
@@ -9,6 +9,9 @@ height = 106.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hlmrv"]
 radius = 257.562
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vpa05"]
+radius = 86.15
 
 [node name="EnemyPlaceholder" type="Node2D"]
 
@@ -26,5 +29,17 @@ texture = ExtResource("1_w5dmy")
 [node name="DetectRadiusCollision" type="CollisionShape2D" parent="EnemyPlaceholder/DetectRadius"]
 shape = SubResource("CircleShape2D_hlmrv")
 
+[node name="AttackRadius" type="Area2D" parent="EnemyPlaceholder"]
+
+[node name="AttackShape" type="CollisionShape2D" parent="EnemyPlaceholder/AttackRadius"]
+shape = SubResource("CircleShape2D_vpa05")
+
+[node name="Timer" type="Timer" parent="EnemyPlaceholder"]
+wait_time = 0.504
+one_shot = true
+
 [connection signal="body_entered" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_entered"]
 [connection signal="body_exited" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_exited"]
+[connection signal="body_entered" from="EnemyPlaceholder/AttackRadius" to="EnemyPlaceholder" method="_on_attack_radius_body_entered"]
+[connection signal="body_exited" from="EnemyPlaceholder/AttackRadius" to="EnemyPlaceholder" method="_on_attack_radius_body_exited"]
+[connection signal="timeout" from="EnemyPlaceholder/Timer" to="EnemyPlaceholder" method="_on_timeout"]

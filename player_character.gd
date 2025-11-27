@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 400
+@export var hp = 100
 
 var target = position
 var moving = false
