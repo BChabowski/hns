@@ -40,15 +40,16 @@ func _on_timeout():
 	ready_to_attack = true
 
 func _on_detect_radius_body_entered(body: Node2D) -> void:
-	#todo this is called also when body is first loaded (interacts with itself?)
-	player = body
+		#todo this is called also when body is first loaded (interacts with itself?)
+	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
+		player = body
 
 func _on_detect_radius_body_exited(body: Node2D) -> void:
 	player = null
 
 func _on_attack_radius_body_entered(body: Node2D) -> void:
-	#todo this is called also when body is first loaded (interacts with itself?)
-	in_attack_distance = true
+	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
+		in_attack_distance = true
 
 func _on_attack_radius_body_exited(body: Node2D) -> void:
 	in_attack_distance = false
