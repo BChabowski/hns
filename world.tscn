@@ -7,8 +7,8 @@
 [node name="World" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(69, -1252)
-scale = Vector2(200, 117.933)
+position = Vector2(-869, -283)
+scale = Vector2(79.4437, 51.5016)
 texture = ExtResource("1_fj7yv")
 
 [node name="PC" parent="." instance=ExtResource("2_fj7yv")]

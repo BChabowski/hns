@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://yf4sybyc3ynp"]
+[gd_scene load_steps=11 format=3 uid="uid://yf4sybyc3ynp"]
 
 [ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
-[ext_resource type="Texture2D" uid="uid://0mex8fqul7mn" path="res://textures/characters/enemy-character-placeholder.png" id="1_w5dmy"]
+[ext_resource type="Texture2D" uid="uid://ca553w2erkyjm" path="res://textures/characters/enemy-placholder-all.png" id="2_hlmrv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hlmrv"]
 radius = 16.0
@@ -13,6 +13,88 @@ radius = 257.562
 [sub_resource type="CircleShape2D" id="CircleShape2D_vpa05"]
 radius = 86.15
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_j2thn"]
+radius = 86.15
+
+[sub_resource type="Animation" id="Animation_hlmrv"]
+resource_name = "Attack"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.101977, 0.298774),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageRadius/DamageShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00178907, 0.0983987, 0.296985),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_vpa05"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageRadius/DamageShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_j2thn"]
+resource_name = "Idle"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2thn"]
+_data = {
+&"Attack": SubResource("Animation_hlmrv"),
+&"Idle": SubResource("Animation_j2thn"),
+&"RESET": SubResource("Animation_vpa05")
+}
+
 [node name="EnemyPlaceholder" type="Node2D"]
 
 [node name="EnemyPlaceholder" type="CharacterBody2D" parent="."]
@@ -22,7 +104,9 @@ script = ExtResource("1_hlmrv")
 shape = SubResource("CapsuleShape2D_hlmrv")
 
 [node name="EnemySprite" type="Sprite2D" parent="EnemyPlaceholder"]
-texture = ExtResource("1_w5dmy")
+texture = ExtResource("2_hlmrv")
+hframes = 5
+frame = 2
 
 [node name="DetectRadius" type="Area2D" parent="EnemyPlaceholder"]
 
@@ -38,8 +122,19 @@ shape = SubResource("CircleShape2D_vpa05")
 wait_time = 0.504
 one_shot = true
 
+[node name="DamageRadius" type="Area2D" parent="EnemyPlaceholder"]
+
+[node name="DamageShape" type="CollisionShape2D" parent="EnemyPlaceholder/DamageRadius"]
+shape = SubResource("CircleShape2D_j2thn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyPlaceholder"]
+libraries = {
+&"": SubResource("AnimationLibrary_j2thn")
+}
+
 [connection signal="body_entered" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_entered"]
 [connection signal="body_exited" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_exited"]
 [connection signal="body_entered" from="EnemyPlaceholder/AttackRadius" to="EnemyPlaceholder" method="_on_attack_radius_body_entered"]
 [connection signal="body_exited" from="EnemyPlaceholder/AttackRadius" to="EnemyPlaceholder" method="_on_attack_radius_body_exited"]
 [connection signal="timeout" from="EnemyPlaceholder/Timer" to="EnemyPlaceholder" method="_on_timeout"]
+[connection signal="body_entered" from="EnemyPlaceholder/DamageRadius" to="EnemyPlaceholder" method="_on_damage_radius_body_entered"]

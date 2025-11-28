@@ -10,7 +10,7 @@ var ready_to_attack = false
 
 #these variables will be dynamic, depending on the equipped weapon 
 var in_attack_distance = false
-var attack_cooldown = 0.5
+var attack_cooldown = 1
 
 func _physics_process(delta):
 	velocity = Vector2.ZERO
@@ -33,14 +33,15 @@ func initiate_attack():
 
 func attack():
 	if(in_attack_distance):
-		print("attack")
+		$AnimationPlayer.play("Attack")
+		await $AnimationPlayer.animation_finished
+		$AnimationPlayer.play("Idle")
 	ready_to_attack = false
 
 func _on_timeout():
 	ready_to_attack = true
 
 func _on_detect_radius_body_entered(body: Node2D) -> void:
-		#todo this is called also when body is first loaded (interacts with itself?)
 	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
 		player = body
 
@@ -53,3 +54,7 @@ func _on_attack_radius_body_entered(body: Node2D) -> void:
 
 func _on_attack_radius_body_exited(body: Node2D) -> void:
 	in_attack_distance = false
+
+func _on_damage_radius_body_entered(body: Node2D) -> void:
+	if(body == player):
+		print("dmg!")
