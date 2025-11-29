@@ -5,6 +5,10 @@ extends CharacterBody2D
 
 var target = position
 var moving = false
+var in_attack_distance=false
+
+func _ready() -> void:
+	self.connect("character_clicked", attack)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -23,3 +27,9 @@ func _physics_process(delta):
 func take_hit(dmg: int):
 	hp -= dmg
 	print("Player takes hit! Life remaining: " + str(hp))
+
+func attack(body: Node2D):
+	print("PC attack")
+	for overlapping in $AttackRadius.get_overlapping_bodies():
+		if(overlapping == body):
+			print("Player attack!")

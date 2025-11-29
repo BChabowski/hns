@@ -100,6 +100,13 @@ _data = {
 [node name="EnemyPlaceholder" type="CharacterBody2D" parent="."]
 script = ExtResource("1_hlmrv")
 
+[node name="BeAttackedButton" type="Button" parent="EnemyPlaceholder"]
+offset_left = -17.0
+offset_top = -43.0
+offset_right = 16.0
+offset_bottom = 59.0
+flat = true
+
 [node name="EnemyCollision" type="CollisionShape2D" parent="EnemyPlaceholder"]
 shape = SubResource("CapsuleShape2D_hlmrv")
 
@@ -132,6 +139,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_j2thn")
 }
 
+[connection signal="pressed" from="EnemyPlaceholder/BeAttackedButton" to="EnemyPlaceholder" method="_on_be_attacked_button_pressed"]
 [connection signal="body_entered" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_entered"]
 [connection signal="body_exited" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_exited"]
 [connection signal="body_entered" from="EnemyPlaceholder/AttackRadius" to="EnemyPlaceholder" method="_on_attack_radius_body_entered"]

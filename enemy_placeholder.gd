@@ -4,6 +4,7 @@ var run_speed = 250
 var player = null
 @onready var timer: Timer = $Timer
 var ready_to_attack = false
+signal character_clicked(obj: Node2D)
 
 @export var hp = 40
 @export var friendly = false
@@ -60,4 +61,8 @@ func _on_attack_radius_body_exited(body: Node2D) -> void:
 func _on_damage_radius_body_entered(body: Node2D) -> void:
 	if(body == player):
 		body.take_hit(base_dmg)
-		print("dmg!")
+
+func _on_be_attacked_button_pressed() -> void:
+	print("_on_be_attacked_button_pressed")
+	#todo use signal bus
+	character_clicked.emit(self)
