@@ -7,6 +7,8 @@ var ready_to_attack = false
 
 @export var hp = 40
 @export var friendly = false
+#todo dmg should be calculated based on strength and weapon
+@export var base_dmg = 5
 
 #these variables will be dynamic, depending on the equipped weapon 
 var in_attack_distance = false
@@ -57,4 +59,5 @@ func _on_attack_radius_body_exited(body: Node2D) -> void:
 
 func _on_damage_radius_body_entered(body: Node2D) -> void:
 	if(body == player):
+		body.take_hit(base_dmg)
 		print("dmg!")

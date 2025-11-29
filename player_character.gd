@@ -19,3 +19,7 @@ func _physics_process(delta):
 			move_and_slide()
 		else:
 			moving = false
+
+func take_hit(dmg: int):
+	hp -= dmg
+	print("Player takes hit! Life remaining: " + str(hp))
