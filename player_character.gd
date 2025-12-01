@@ -8,7 +8,7 @@ var moving = false
 var in_attack_distance=false
 
 func _ready() -> void:
-	self.connect("character_clicked", attack)
+	SignalBus.object_clicked.connect(react_to_object_clicked)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -28,8 +28,9 @@ func take_hit(dmg: int):
 	hp -= dmg
 	print("Player takes hit! Life remaining: " + str(hp))
 
-func attack(body: Node2D):
-	print("PC attack")
+func react_to_object_clicked(body: Node2D):
+	target = body.global_position
+	#attack
 	for overlapping in $AttackRadius.get_overlapping_bodies():
 		if(overlapping == body):
 			print("Player attack!")

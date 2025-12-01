@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://yf4sybyc3ynp"]
+[gd_scene load_steps=12 format=3 uid="uid://yf4sybyc3ynp"]
 
 [ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
 [ext_resource type="Texture2D" uid="uid://ca553w2erkyjm" path="res://textures/characters/enemy-placholder-all.png" id="2_hlmrv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hlmrv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hlmrv"]
 radius = 16.0
@@ -105,6 +107,7 @@ offset_left = -17.0
 offset_top = -43.0
 offset_right = 16.0
 offset_bottom = 59.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hlmrv")
 flat = true
 
 [node name="EnemyCollision" type="CollisionShape2D" parent="EnemyPlaceholder"]
