@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var run_speed = 250
-var player = null
+var player = null #the same as currently_engaged_enemy in PC class?
 @onready var timer: Timer = $Timer
 var ready_to_attack = false
 
@@ -40,10 +40,15 @@ func attack():
 		$AnimationPlayer.play("Idle")
 	ready_to_attack = false
 
+func take_hit(dmg: int):
+	hp -= dmg
+	print("Enemy takes hit! Life remaining: " + str(hp))
+
 func _on_timeout():
 	ready_to_attack = true
 
 func _on_detect_radius_body_entered(body: Node2D) -> void:
+	#todo use groups
 	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
 		player = body
 
@@ -51,6 +56,7 @@ func _on_detect_radius_body_exited(body: Node2D) -> void:
 	player = null
 
 func _on_attack_radius_body_entered(body: Node2D) -> void:
+	#todo use groups
 	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
 		in_attack_distance = true
 
