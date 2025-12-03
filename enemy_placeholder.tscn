@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://yf4sybyc3ynp"]
+[gd_scene load_steps=13 format=3 uid="uid://yf4sybyc3ynp"]
 
 [ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
 [ext_resource type="Texture2D" uid="uid://ca553w2erkyjm" path="res://textures/characters/enemy-placholder-all.png" id="2_hlmrv"]
@@ -90,9 +90,39 @@ tracks/1/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_otyl3"]
+resource_name = "Death"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageRadius/DamageShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j2thn"]
 _data = {
 &"Attack": SubResource("Animation_hlmrv"),
+&"Death": SubResource("Animation_otyl3"),
 &"Idle": SubResource("Animation_j2thn"),
 &"RESET": SubResource("Animation_vpa05")
 }
@@ -114,8 +144,9 @@ flat = true
 shape = SubResource("CapsuleShape2D_hlmrv")
 
 [node name="EnemySprite" type="Sprite2D" parent="EnemyPlaceholder"]
+position = Vector2(-1, 0)
 texture = ExtResource("2_hlmrv")
-hframes = 5
+hframes = 8
 frame = 2
 
 [node name="DetectRadius" type="Area2D" parent="EnemyPlaceholder"]

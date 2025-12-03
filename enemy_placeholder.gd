@@ -6,6 +6,7 @@ var currently_engaged_enemy = null
 var ready_to_attack = false
 
 @export var hp = 40
+@export var xp_value = 100
 @export var friendly = false
 #todo dmg should be calculated based on strength and weapon
 @export var base_dmg = 5
@@ -14,7 +15,7 @@ var ready_to_attack = false
 var in_attack_distance = false
 var attack_cooldown = 1
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	velocity = Vector2.ZERO
 	if currently_engaged_enemy && global_position.distance_to(currently_engaged_enemy.global_position) > 75:
 		velocity = global_position.direction_to(currently_engaged_enemy.global_position) * run_speed
@@ -43,6 +44,14 @@ func attack():
 func take_hit(dmg: int):
 	hp -= dmg
 	print("Enemy takes hit! Life remaining: " + str(hp))
+	if hp <= 0:
+		die()
+
+func die():
+	$AnimationPlayer.play("Death")
+	await $AnimationPlayer.animation_finished
+	SignalBus.xp_granted.emit(xp_value)
+	self.queue_free();
 
 func _on_timeout():
 	ready_to_attack = true
@@ -53,7 +62,8 @@ func _on_detect_radius_body_entered(body: Node2D) -> void:
 		currently_engaged_enemy = body
 
 func _on_detect_radius_body_exited(body: Node2D) -> void:
-	currently_engaged_enemy = null
+	if body == currently_engaged_enemy:
+		currently_engaged_enemy = null
 
 func _on_attack_radius_body_entered(body: Node2D) -> void:
 	#todo use groups
@@ -61,7 +71,8 @@ func _on_attack_radius_body_entered(body: Node2D) -> void:
 		in_attack_distance = true
 
 func _on_attack_radius_body_exited(body: Node2D) -> void:
-	in_attack_distance = false
+	if body == currently_engaged_enemy:
+		in_attack_distance = false
 
 func _on_damage_radius_body_entered(body: Node2D) -> void:
 	if(body == currently_engaged_enemy):
