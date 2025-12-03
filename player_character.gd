@@ -57,6 +57,9 @@ func take_hit(dmg: int):
 func react_to_object_clicked(body: Node2D):
 	target = body.global_position
 	#attack
+	#reset attack shape
+	$AttackRadius/AttackShape.disabled = true
+	$AttackRadius/AttackShape.disabled = false
 	currently_engaged_enemy = body
 	for overlapping in $AttackRadius.get_overlapping_bodies():
 		if(overlapping == currently_engaged_enemy):
