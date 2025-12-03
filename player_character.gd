@@ -57,14 +57,13 @@ func take_hit(dmg: int):
 func react_to_object_clicked(body: Node2D):
 	target = body.global_position
 	#attack
-	#reset attack shape
+	#reset attack shape so enemy can be attacked if it was in attack radius but not engaged
 	$AttackRadius/AttackShape.disabled = true
 	$AttackRadius/AttackShape.disabled = false
 	currently_engaged_enemy = body
 	for overlapping in $AttackRadius.get_overlapping_bodies():
 		if(overlapping == currently_engaged_enemy):
 			print("Player attack!")
-
 
 func _on_attack_radius_body_entered(body: Node2D) -> void:
 	#todo use groups
