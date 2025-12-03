@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var run_speed = 250
-var currently_engaged_enemy = null #the same as currently_engaged_enemy in PC class?
+var currently_engaged_enemy = null
 @onready var timer: Timer = $Timer
 var ready_to_attack = false
 
