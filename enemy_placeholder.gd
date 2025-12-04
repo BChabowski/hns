@@ -5,17 +5,26 @@ var currently_engaged_enemy = null
 @onready var timer: Timer = $Timer
 var ready_to_attack = false
 
-@export var hp = 40
+@export var max_hp = 40
 @export var xp_value = 100
 @export var friendly = false
 #todo dmg should be calculated based on strength and weapon
 @export var base_dmg = 5
+var hp = 40
 
 #these variables will be dynamic, depending on the equipped weapon 
 var in_attack_distance = false
 var attack_cooldown = 1
 
+func _ready() -> void:
+	$HpBar.max_value = max_hp
+	$HpBar.value = hp
+
 func _physics_process(_delta):
+	if !currently_engaged_enemy:
+		$HpBar.hide()
+	elif currently_engaged_enemy && hp < max_hp:
+		$HpBar.show()
 	velocity = Vector2.ZERO
 	if currently_engaged_enemy && global_position.distance_to(currently_engaged_enemy.global_position) > 75:
 		velocity = global_position.direction_to(currently_engaged_enemy.global_position) * run_speed
@@ -37,21 +46,21 @@ func initiate_attack():
 func attack():
 	if(in_attack_distance):
 		$AnimationPlayer.play("Attack")
-		await $AnimationPlayer.animation_finished
-		$AnimationPlayer.play("Idle")
 	ready_to_attack = false
 
 func take_hit(dmg: int):
 	hp -= dmg
+	$HpBar.set_value_no_signal(hp)
 	print("Enemy takes hit! Life remaining: " + str(hp))
 	if hp <= 0:
+		ready_to_attack = false
 		die()
 
 func die():
 	$AnimationPlayer.play("Death")
 	await $AnimationPlayer.animation_finished
 	SignalBus.xp_granted.emit(xp_value)
-	self.queue_free();
+	self.queue_free()
 
 func _on_timeout():
 	ready_to_attack = true

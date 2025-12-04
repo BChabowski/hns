@@ -1,7 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://yf4sybyc3ynp"]
+[gd_scene load_steps=16 format=3 uid="uid://yf4sybyc3ynp"]
 
 [ext_resource type="Script" uid="uid://btyhi6suseagn" path="res://enemy_placeholder.gd" id="1_hlmrv"]
 [ext_resource type="Texture2D" uid="uid://ca553w2erkyjm" path="res://textures/characters/enemy-placholder-all.png" id="2_hlmrv"]
+[ext_resource type="Texture2D" uid="uid://clwn8vcnwo7ex" path="res://textures/ui/enemy-hp-bar-under.png" id="3_j2thn"]
+[ext_resource type="Texture2D" uid="uid://bh6kflggsnfxd" path="res://textures/ui/enemy-hp-bar-over.png" id="4_h0a2k"]
+[ext_resource type="Texture2D" uid="uid://db2tpc6lwwrbs" path="res://textures/ui/enemy-hp-bar-progress.png" id="4_otyl3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hlmrv"]
 
@@ -47,6 +50,35 @@ tracks/1/keys = {
 "values": [true, false, true]
 }
 
+[sub_resource type="Animation" id="Animation_otyl3"]
+resource_name = "Death"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageRadius/DamageShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_j2thn"]
 resource_name = "Idle"
 step = 0.1
@@ -90,35 +122,6 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_otyl3"]
-resource_name = "Death"
-length = 0.3
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EnemySprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [5, 6, 7]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("DamageRadius/DamageShape:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j2thn"]
 _data = {
 &"Attack": SubResource("Animation_hlmrv"),
@@ -131,6 +134,7 @@ _data = {
 
 [node name="EnemyPlaceholder" type="CharacterBody2D" parent="."]
 script = ExtResource("1_hlmrv")
+metadata/_edit_lock_ = true
 
 [node name="BeAttackedButton" type="Button" parent="EnemyPlaceholder"]
 offset_left = -17.0
@@ -139,39 +143,58 @@ offset_right = 16.0
 offset_bottom = 59.0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_hlmrv")
 flat = true
+metadata/_edit_lock_ = true
 
 [node name="EnemyCollision" type="CollisionShape2D" parent="EnemyPlaceholder"]
 shape = SubResource("CapsuleShape2D_hlmrv")
+metadata/_edit_lock_ = true
 
 [node name="EnemySprite" type="Sprite2D" parent="EnemyPlaceholder"]
 position = Vector2(-1, 0)
 texture = ExtResource("2_hlmrv")
 hframes = 8
 frame = 2
+metadata/_edit_lock_ = true
 
 [node name="DetectRadius" type="Area2D" parent="EnemyPlaceholder"]
+metadata/_edit_lock_ = true
 
 [node name="DetectRadiusCollision" type="CollisionShape2D" parent="EnemyPlaceholder/DetectRadius"]
 shape = SubResource("CircleShape2D_hlmrv")
+metadata/_edit_lock_ = true
 
 [node name="AttackRadius" type="Area2D" parent="EnemyPlaceholder"]
+metadata/_edit_lock_ = true
 
 [node name="AttackShape" type="CollisionShape2D" parent="EnemyPlaceholder/AttackRadius"]
 shape = SubResource("CircleShape2D_vpa05")
+metadata/_edit_lock_ = true
 
 [node name="Timer" type="Timer" parent="EnemyPlaceholder"]
 wait_time = 0.504
 one_shot = true
 
 [node name="DamageRadius" type="Area2D" parent="EnemyPlaceholder"]
+metadata/_edit_lock_ = true
 
 [node name="DamageShape" type="CollisionShape2D" parent="EnemyPlaceholder/DamageRadius"]
 shape = SubResource("CircleShape2D_j2thn")
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyPlaceholder"]
 libraries = {
 &"": SubResource("AnimationLibrary_j2thn")
 }
+
+[node name="HpBar" type="TextureProgressBar" parent="EnemyPlaceholder"]
+offset_left = -46.0
+offset_top = 64.0
+offset_right = 268.0
+offset_bottom = 108.0
+scale = Vector2(0.3, 0.3)
+texture_under = ExtResource("3_j2thn")
+texture_over = ExtResource("4_h0a2k")
+texture_progress = ExtResource("4_otyl3")
 
 [connection signal="pressed" from="EnemyPlaceholder/BeAttackedButton" to="EnemyPlaceholder" method="_on_be_attacked_button_pressed"]
 [connection signal="body_entered" from="EnemyPlaceholder/DetectRadius" to="EnemyPlaceholder" method="_on_detect_radius_body_entered"]
