@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var speed = 400
 @export var hp = 100
+@export var max_hp = 100
 @export var base_dmg = 5
 @export var attack_cooldown = 1
 
@@ -19,6 +20,7 @@ var ready_to_attack = false
 func _ready() -> void:
 	SignalBus.object_clicked.connect(react_to_object_clicked)
 	SignalBus.xp_granted.connect(add_xp_points)
+	SignalBus.player_hp_changed.emit(hp, max_hp)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -56,6 +58,7 @@ func attack():
 
 func take_hit(dmg: int):
 	hp -= dmg
+	SignalBus.player_hp_changed.emit(hp, max_hp)
 	print("Player takes hit! Life remaining: " + str(hp))
 ###
 

@@ -1,18 +1,61 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2uj63fa7hd1y"]
+[gd_scene load_steps=8 format=3 uid="uid://b2uj63fa7hd1y"]
 
 [ext_resource type="Texture2D" uid="uid://5b7appys1nfl" path="res://textures/overworld/world-placeholder.png" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://c4r2q48nkxnuq" path="res://pc.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://yf4sybyc3ynp" path="res://enemy_placeholder.tscn" id="3_tlwt5"]
+[ext_resource type="Texture2D" uid="uid://clwn8vcnwo7ex" path="res://textures/ui/enemy-hp-bar-under.png" id="4_dwbse"]
+[ext_resource type="Texture2D" uid="uid://btddn6ao264k5" path="res://textures/ui/enemy-hp-bar-over.png" id="5_pkg7o"]
+[ext_resource type="Texture2D" uid="uid://db2tpc6lwwrbs" path="res://textures/ui/enemy-hp-bar-progress.png" id="6_gbfbk"]
+[ext_resource type="Script" uid="uid://dscp2i4vnsabw" path="res://player_hp_bar.gd" id="7_pkg7o"]
 
 [node name="World" type="Node2D"]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -75.0
+offset_right = 36.0
+grow_vertical = 0
+columns = 5
+
+[node name="PlayerHpBar" type="TextureProgressBar" parent="CanvasLayer/GridContainer"]
+layout_mode = 2
+allow_greater = true
+texture_under = ExtResource("4_dwbse")
+texture_over = ExtResource("5_pkg7o")
+texture_progress = ExtResource("6_gbfbk")
+script = ExtResource("7_pkg7o")
+
+[node name="HpValueLabel" type="Label" parent="CanvasLayer/GridContainer/PlayerHpBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -11.5
+offset_right = 17.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "100/100"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-869, -283)
+position = Vector2(-733, -420)
 scale = Vector2(79.4437, 51.5016)
 texture = ExtResource("1_fj7yv")
+metadata/_edit_lock_ = true
 
 [node name="PC" parent="." instance=ExtResource("2_fj7yv")]
 position = Vector2(531, 290)
 
 [node name="EnemyPlaceholder" parent="." instance=ExtResource("3_tlwt5")]
 position = Vector2(240, 193)
+
+[connection signal="mouse_entered" from="CanvasLayer/GridContainer/PlayerHpBar" to="CanvasLayer/GridContainer/PlayerHpBar" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/GridContainer/PlayerHpBar" to="CanvasLayer/GridContainer/PlayerHpBar" method="_on_mouse_exited"]
