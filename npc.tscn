@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://rtd5yyo5q8pb"]
+
+[ext_resource type="Texture2D" uid="uid://du63mm1mk2440" path="res://textures/characters/npc-all.png" id="1_ideak"]
+[ext_resource type="Script" uid="uid://mjh8nb2l60w" path="res://npc.gd" id="1_xxcha"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ideak"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ideak"]
+radius = 16.0
+height = 106.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ideak"]
+radius = 86.15
+
+[sub_resource type="Animation" id="Animation_xxcha"]
+resource_name = "Idle"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NpcSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kh24r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NpcSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kh24r"]
+_data = {
+&"Idle": SubResource("Animation_xxcha"),
+&"RESET": SubResource("Animation_kh24r")
+}
+
+[node name="Npc" type="Node2D"]
+
+[node name="Npc" type="CharacterBody2D" parent="."]
+script = ExtResource("1_xxcha")
+
+[node name="InteractionButton" type="Button" parent="Npc"]
+offset_left = -17.0
+offset_top = -43.0
+offset_right = 16.0
+offset_bottom = 59.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ideak")
+flat = true
+
+[node name="NpcSprite" type="Sprite2D" parent="Npc"]
+texture = ExtResource("1_ideak")
+hframes = 8
+
+[node name="NpcCollision" type="CollisionShape2D" parent="Npc"]
+shape = SubResource("CapsuleShape2D_ideak")
+
+[node name="InteractionRadius" type="Area2D" parent="Npc"]
+
+[node name="InteractionShape" type="CollisionShape2D" parent="Npc/InteractionRadius"]
+shape = SubResource("CircleShape2D_ideak")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Npc"]
+libraries = {
+&"": SubResource("AnimationLibrary_kh24r")
+}
+
+[connection signal="pressed" from="Npc/InteractionButton" to="Npc" method="_on_interaction_button_pressed"]
+[connection signal="body_entered" from="Npc/InteractionRadius" to="Npc" method="_on_interaction_radius_body_entered"]
+[connection signal="body_exited" from="Npc/InteractionRadius" to="Npc" method="_on_interaction_radius_body_exited"]

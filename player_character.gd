@@ -65,6 +65,10 @@ func take_hit(dmg: int):
 
 func react_to_object_clicked(body: Node2D):
 	target = body.global_position
+	#interact
+	#todo use groups
+	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "Npc"):
+		return
 	#attack
 	#reset attack shape so enemy can be attacked if it was in attack radius but not engaged
 	$AttackRadius/AttackShape.disabled = true

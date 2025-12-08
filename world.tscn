@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2uj63fa7hd1y"]
+[gd_scene load_steps=12 format=3 uid="uid://b2uj63fa7hd1y"]
 
 [ext_resource type="Texture2D" uid="uid://5b7appys1nfl" path="res://textures/overworld/world-placeholder.png" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://c4r2q48nkxnuq" path="res://pc.tscn" id="2_fj7yv"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://o5ank7vwjg8p" path="res://textures/ui/player-xp-bar-progress.png" id="6_ioo17"]
 [ext_resource type="Script" uid="uid://dscp2i4vnsabw" path="res://player_hp_bar.gd" id="7_pkg7o"]
 [ext_resource type="Script" uid="uid://ckwgy65xecynr" path="res://player_xp_bar.gd" id="7_wse8f"]
+[ext_resource type="PackedScene" uid="uid://rtd5yyo5q8pb" path="res://npc.tscn" id="11_ic0uy"]
 
 [node name="World" type="Node2D"]
 
@@ -87,6 +88,9 @@ position = Vector2(531, 290)
 
 [node name="EnemyPlaceholder" parent="." instance=ExtResource("3_tlwt5")]
 position = Vector2(240, 193)
+
+[node name="Npc" parent="." instance=ExtResource("11_ic0uy")]
+position = Vector2(820, 392)
 
 [connection signal="mouse_entered" from="CanvasLayer/MarginContainer/GridContainer/PlayerHpBar" to="CanvasLayer/MarginContainer/GridContainer/PlayerHpBar" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/MarginContainer/GridContainer/PlayerHpBar" to="CanvasLayer/MarginContainer/GridContainer/PlayerHpBar" method="_on_mouse_exited"]
