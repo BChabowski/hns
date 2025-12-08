@@ -21,6 +21,7 @@ func _ready() -> void:
 	SignalBus.object_clicked.connect(react_to_object_clicked)
 	SignalBus.xp_granted.connect(add_xp_points)
 	SignalBus.player_hp_changed.emit(hp, max_hp)
+	SignalBus.player_xp_changed.emit(current_xp_points, xp_to_next_level)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -72,6 +73,7 @@ func react_to_object_clicked(body: Node2D):
 
 func add_xp_points(points):
 	current_xp_points += points
+	SignalBus.player_xp_changed.emit(current_xp_points, xp_to_next_level)
 	print("Player gains xp points! Current xp points amount: " + str(points))
 	if current_xp_points > xp_to_next_level:
 		raise_level()
