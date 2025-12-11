@@ -18,6 +18,16 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 SignalBus="*res://SignalBus.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/mode=2
+
+[global_group]
+
+PC="Player Character"
+NPC="Friendly Non-Player Character"
+Enemy="Unfriendly Non-Player Character"

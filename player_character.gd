@@ -18,6 +18,7 @@ var currently_engaged_enemy: Node2D
 var ready_to_attack = false
 
 func _ready() -> void:
+	add_to_group("PC")
 	SignalBus.object_clicked.connect(react_to_object_clicked)
 	SignalBus.xp_granted.connect(add_xp_points)
 	SignalBus.player_hp_changed.emit(hp, max_hp)
@@ -60,14 +61,13 @@ func attack():
 func take_hit(dmg: int):
 	hp -= dmg
 	SignalBus.player_hp_changed.emit(hp, max_hp)
-	print("Player takes hit! Life remaining: " + str(hp))
 ###
 
 func react_to_object_clicked(body: Node2D):
 	target = body.global_position
 	#interact
-	#todo use groups
-	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "Npc"):
+	if body.is_in_group("NPC"):
+		#handle PC side of interaction
 		return
 	#attack
 	#reset attack shape so enemy can be attacked if it was in attack radius but not engaged
@@ -78,7 +78,6 @@ func react_to_object_clicked(body: Node2D):
 func add_xp_points(points):
 	current_xp_points += points
 	SignalBus.player_xp_changed.emit(current_xp_points, xp_to_next_level)
-	print("Player gains xp points! Current xp points amount: " + str(points))
 	if current_xp_points > xp_to_next_level:
 		raise_level()
 
@@ -88,7 +87,7 @@ func raise_level():
 func _on_attack_radius_body_entered(body: Node2D) -> void:
 	#todo maybe keep array of all nodes in this area?
 	#todo use groups
-	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "EnemyPlaceholder"):
+	if (body.is_in_group("Enemy")):
 		if currently_engaged_enemy && currently_engaged_enemy == body:
 			in_attack_distance = true
 

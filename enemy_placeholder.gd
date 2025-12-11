@@ -17,6 +17,7 @@ var in_attack_distance = false
 var attack_cooldown = 1
 
 func _ready() -> void:
+	add_to_group("Enemy")
 	$HpBar.max_value = max_hp
 	$HpBar.value = hp
 
@@ -51,7 +52,6 @@ func attack():
 func take_hit(dmg: int):
 	hp -= dmg
 	$HpBar.set_value_no_signal(hp)
-	print("Enemy takes hit! Life remaining: " + str(hp))
 	if hp <= 0:
 		ready_to_attack = false
 		die()
@@ -67,7 +67,7 @@ func _on_timeout():
 
 func _on_detect_radius_body_entered(body: Node2D) -> void:
 	#todo use groups
-	if (body.get_path().get_name(body.get_path().get_name_count() - 1) == "PC"):
+	if body.is_in_group("PC"):
 		currently_engaged_enemy = body
 
 func _on_detect_radius_body_exited(body: Node2D) -> void:
@@ -88,5 +88,4 @@ func _on_damage_radius_body_entered(body: Node2D) -> void:
 		body.take_hit(base_dmg)
 
 func _on_be_attacked_button_pressed() -> void:
-	print("_on_be_attacked_button_pressed")
 	SignalBus.object_clicked.emit(self)
