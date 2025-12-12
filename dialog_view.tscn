@@ -1,0 +1,122 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxmiplv1de45v"]
+
+[ext_resource type="Texture2D" uid="uid://capf8m0r0vdfk" path="res://textures/ui/dialog-background.png" id="1_axwqu"]
+[ext_resource type="Script" uid="uid://g6b0rtxwyswa" path="res://dialog_view.gd" id="1_ci5el"]
+[ext_resource type="Texture2D" uid="uid://3eqxptkmyvmm" path="res://textures/characters/npc-portrait.png" id="2_qaal6"]
+
+[node name="DialogView" type="Control"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("1_ci5el")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("1_axwqu")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 175)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -450.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="NpcPortraitContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 350
+
+[node name="NpcPortrait" type="TextureRect" parent="NpcPortraitContainer"]
+layout_mode = 2
+texture = ExtResource("2_qaal6")
+
+[node name="NpcTextContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -125.0
+offset_bottom = 125.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = -50
+theme_override_constants/margin_right = 30
+
+[node name="NpcText" type="RichTextLabel" parent="NpcTextContainer"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+text = "aaaaa
+aaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+a
+a
+a
+aa
+a
+a
+a
+a
+a
+aa
+
+a
+a
+a
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aa
+aa"
+
+[node name="PlayerDialogLinesContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -175.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerDialogLinesContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CloseButton" type="Button" parent="PlayerDialogLinesContainer/ScrollContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+action_mode = 0
+text = "Close"
+flat = true
+alignment = 0
+autowrap_mode = 3
+
+[connection signal="pressed" from="PlayerDialogLinesContainer/ScrollContainer/CloseButton" to="." method="_on_close_button_pressed"]

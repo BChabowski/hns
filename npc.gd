@@ -12,7 +12,7 @@ func _physics_process(_delta: float) -> void:
 		interaction_pending = false
 
 func interact():
-	print("Hello there!")
+	SignalBus.show_dialog_box.emit()
 
 func _on_interaction_radius_body_entered(body: Node2D) -> void:
 	if body.is_in_group("PC"):
