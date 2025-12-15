@@ -25,6 +25,10 @@ func _load_responses(dialog_id: int):
 	#todo find a way to add buttons programatically in a nice list
 	response.get_child(0).pressed.connect(_on_click_continue.bind(response))
 	$PlayerDialogLinesContainer/ScrollContainer.add_child(response)
+	var close: Button = Button.new()
+	close.text = "Close"
+	close.pressed.connect(_on_close_button_pressed)
+	$PlayerDialogLinesContainer/ScrollContainer.add_child(close)
 
 ### button on_click functions
 func _on_click_continue(response: Node):

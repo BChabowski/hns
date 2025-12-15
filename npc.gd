@@ -26,3 +26,4 @@ func _on_interaction_radius_body_exited(body: Node2D) -> void:
 
 func _on_interaction_button_pressed() -> void:
 	interaction_pending = true
+	SignalBus.object_clicked.emit(self)
