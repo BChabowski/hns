@@ -24,7 +24,7 @@ func _ready() -> void:
 	SignalBus.player_hp_changed.emit(hp, max_hp)
 	SignalBus.player_xp_changed.emit(current_xp_points, xp_to_next_level)
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			target = get_global_mouse_position()
