@@ -19,13 +19,17 @@ func _load_dialog(dialog_id: int):
 	$NpcTextContainer/NpcText.text = dialog_supplier.get_dialog_text(npc_id, dialog_id)
 
 func _load_responses(dialog_id: int):
-	var response = dialog_supplier.get_dialog_responses(npc_id, dialog_id)
+	for node in $PlayerDialogLinesContainer/ScrollContainer.get_children():
+		node.queue_free()
+	var response: Node = dialog_supplier.get_dialog_responses(npc_id, dialog_id)
 	#todo find a way to add buttons programatically in a nice list
-	$PlayerDialogLinesContainer/ScrollContainer/CloseButton.hide()
+	response.get_child(0).pressed.connect(_on_click_continue.bind(response))
 	$PlayerDialogLinesContainer/ScrollContainer.add_child(response)
 
 ### button on_click functions
-
+func _on_click_continue(response: Node):
+	_load_dialog(response.next_dialog_id)
+	_load_responses(response.next_dialog_id)
 ###
 
 func _on_close_button_pressed() -> void:

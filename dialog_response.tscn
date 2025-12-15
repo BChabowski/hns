@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkri18qh1o8nu"]
+[gd_scene load_steps=2 format=3 uid="uid://dkri18qh1o8nu"]
 
-[ext_resource type="Script" uid="uid://cvcgi7ohrrbeo" path="res://dialog_response_button.gd" id="1_ackp6"]
 [ext_resource type="Script" uid="uid://b6q3rjby3uj7l" path="res://dialog_response.gd" id="1_y1xq8"]
 
 [node name="DialogResponse" type="Control"]
@@ -16,4 +15,3 @@ script = ExtResource("1_y1xq8")
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
-script = ExtResource("1_ackp6")
