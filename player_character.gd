@@ -64,7 +64,6 @@ func take_hit(dmg: int):
 ###
 
 func react_to_object_clicked(body: Node2D):
-	print("clicl")
 	target = body.global_position
 	moving = true
 	#interact

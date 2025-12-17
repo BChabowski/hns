@@ -6,7 +6,8 @@ func get_dialog_text(npc_id: int, dialog_id: int):
 	else: 
 		return "What's up, doc?"
 
-func get_dialog_responses(npc_id: int, dialog_id: int) -> Node:
+func get_dialog_responses(npc_id: int, dialog_id: int) -> Array[Node]:
+	var responses: Array[Node] = []
 	#todo accept dialog_response.tscn as a parameter?
 	#todo return array
 	var dialog_response = preload("res://dialog_response.tscn").instantiate()
@@ -17,4 +18,10 @@ func get_dialog_responses(npc_id: int, dialog_id: int) -> Node:
 	else:
 		dialog_response.set_text("OK.")
 		dialog_response.next_dialog_id = 1
-	return dialog_response
+	responses.append(dialog_response)
+	var close = preload("res://dialog_response.tscn").instantiate()
+	close.end_conversation = true
+	close.set_text("Close")
+	responses.append(close)
+	
+	return responses

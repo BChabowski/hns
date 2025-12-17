@@ -19,16 +19,17 @@ func _load_dialog(dialog_id: int):
 	$NpcTextContainer/NpcText.text = dialog_supplier.get_dialog_text(npc_id, dialog_id)
 
 func _load_responses(dialog_id: int):
-	for node in $PlayerDialogLinesContainer/ScrollContainer.get_children():
+	for node in $PlayerDialogLinesContainer/ScrollContainer/VBoxContainer.get_children():
 		node.queue_free()
-	var response: Node = dialog_supplier.get_dialog_responses(npc_id, dialog_id)
+	var responses: Array[Node] = dialog_supplier.get_dialog_responses(npc_id, dialog_id)
 	#todo find a way to add buttons programatically in a nice list
+	var response = responses[0]
 	response.get_child(0).pressed.connect(_on_click_continue.bind(response))
-	$PlayerDialogLinesContainer/ScrollContainer.add_child(response)
-	var close: Button = Button.new()
-	close.text = "Close"
-	close.pressed.connect(_on_close_button_pressed)
-	$PlayerDialogLinesContainer/ScrollContainer.add_child(close)
+	$PlayerDialogLinesContainer/ScrollContainer/VBoxContainer.add_child(response)
+	var close = responses[1]
+	#close.text = "Close"
+	close.get_child(0).pressed.connect(_on_close_button_pressed)
+	$PlayerDialogLinesContainer/ScrollContainer/VBoxContainer.add_child(close)
 
 ### button on_click functions
 func _on_click_continue(response: Node):
@@ -37,5 +38,4 @@ func _on_click_continue(response: Node):
 ###
 
 func _on_close_button_pressed() -> void:
-	print("btn press")
 	hide()

@@ -110,13 +110,7 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 mouse_filter = 2
 
-[node name="CloseButton" type="Button" parent="PlayerDialogLinesContainer/ScrollContainer"]
-custom_minimum_size = Vector2(400, 25)
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerDialogLinesContainer/ScrollContainer"]
 layout_mode = 2
-action_mode = 0
-text = "Close"
-flat = true
-alignment = 0
-autowrap_mode = 3
-
-[connection signal="pressed" from="PlayerDialogLinesContainer/ScrollContainer/CloseButton" to="." method="_on_close_button_pressed"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
