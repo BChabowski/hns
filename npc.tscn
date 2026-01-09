@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://rtd5yyo5q8pb"]
+[gd_scene load_steps=9 format=3 uid="uid://rtd5yyo5q8pb"]
 
 [ext_resource type="Texture2D" uid="uid://du63mm1mk2440" path="res://textures/characters/npc-all.png" id="1_ideak"]
 [ext_resource type="Script" uid="uid://mjh8nb2l60w" path="res://npc.gd" id="1_xxcha"]
-[ext_resource type="Script" uid="uid://bdleba2acokuh" path="res://npc_chat.gd" id="3_kh24r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ideak"]
 
@@ -81,17 +80,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_kh24r")
 }
 
-[node name="NobodyWhoChat" type="NobodyWhoChat" parent="Npc" node_paths=PackedStringArray("model_node")]
-model_node = NodePath("../NobodyWhoModel")
-system_prompt = "You are a poor blacksmith, a widower. You don't believe anything good will happen to you and to make things worse, there's a bandit camp nearby. When interacted, respond only with blacksmith dialog lines, refrain from anything else."
-allow_thinking = false
-script = ExtResource("3_kh24r")
-
-[node name="NobodyWhoModel" type="NobodyWhoModel" parent="Npc"]
-model_path = "res://addons/Qwen_Qwen3-4B-Q4_K_M.gguf"
-
 [connection signal="pressed" from="Npc/InteractionButton" to="Npc" method="_on_interaction_button_pressed"]
 [connection signal="body_entered" from="Npc/InteractionRadius" to="Npc" method="_on_interaction_radius_body_entered"]
 [connection signal="body_exited" from="Npc/InteractionRadius" to="Npc" method="_on_interaction_radius_body_exited"]
-[connection signal="response_finished" from="Npc/NobodyWhoChat" to="Npc" method="_on_nobody_who_chat_response_finished"]
-[connection signal="response_updated" from="Npc/NobodyWhoChat" to="Npc" method="_on_nobody_who_chat_response_updated"]

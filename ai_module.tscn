@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dejqfrjbk6kg8"]
+
+[ext_resource type="Script" uid="uid://bate2tpkd4f7f" path="res://ai_module.gd" id="1_ocecm"]
+
+[node name="AIModule" type="Node2D"]
+
+[node name="AIChat" type="NobodyWhoChat" parent="." node_paths=PackedStringArray("model_node")]
+model_node = NodePath("../AIModel")
+allow_thinking = false
+script = ExtResource("1_ocecm")
+
+[node name="AIModel" type="NobodyWhoModel" parent="."]
+model_path = "res://addons/Qwen_Qwen3-4B-Q4_K_M.gguf"
+
+[connection signal="response_updated" from="AIChat" to="AIChat" method="_on_response_updated"]
