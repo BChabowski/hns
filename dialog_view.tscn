@@ -72,6 +72,7 @@ theme_override_constants/margin_right = 30
 [node name="NpcText" type="RichTextLabel" parent="NpcTextContainer"]
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
+text = "..."
 
 [node name="PlayerDialogLinesContainer" type="MarginContainer" parent="."]
 layout_mode = 1

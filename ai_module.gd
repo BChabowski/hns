@@ -14,3 +14,6 @@ func respond(dialog_line_text: String, npc: Node2D):
 func _on_response_updated(new_token: String) -> void:
 	print(new_token)
 	SignalBus.dialog_updated.emit(new_token)
+
+func _on_response_finished(response: String) -> void:
+	SignalBus.dialog_finished.emit()

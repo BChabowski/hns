@@ -12,4 +12,5 @@ script = ExtResource("1_ocecm")
 [node name="AIModel" type="NobodyWhoModel" parent="."]
 model_path = "res://addons/Qwen_Qwen3-4B-Q4_K_M.gguf"
 
+[connection signal="response_finished" from="AIChat" to="AIChat" method="_on_response_finished"]
 [connection signal="response_updated" from="AIChat" to="AIChat" method="_on_response_updated"]

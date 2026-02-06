@@ -8,3 +8,4 @@ signal show_dialog_box(npc: Node2D)
 signal dialog_line_chosen(dialog_line: Button)
 
 signal dialog_updated(next_word: String)
+signal dialog_finished
