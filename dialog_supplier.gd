@@ -18,6 +18,11 @@ func get_dialog_responses(npc_id: int, dialog_id: int) -> Array[Node]:
 	if dialog_id == 0:
 		dialog_response.set_text("What will you give me if I kill the badits?")
 		dialog_response.next_dialog_id = 1
+	if dialog_id == 1:
+		dialog_response.set_text("OK")
+		dialog_response.continue_flag = false
+		dialog_response.end_conversation = true
+		dialog_response.next_dialog_id = 2
 	responses.append(dialog_response)
 	var close = preload("res://dialog_response.tscn").instantiate()
 	close.end_conversation = true
